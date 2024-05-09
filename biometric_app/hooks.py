@@ -30,6 +30,10 @@ app_license = "mit"
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+
+doctype_list_js = {
+	"Employee Checkin":"biometric_app/api-biometric/list_view.js"
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -151,6 +155,15 @@ app_license = "mit"
 # 	],
 # }
 
+scheduler_events = {
+	"cron":{
+		"0/1 * * * *":[
+            
+			"biometric_app.api-biometric.bio.get_transactions_log"
+		]
+	}
+}
+
 # Testing
 # -------
 
@@ -227,3 +240,12 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+fixtures = [{
+    "dt": "Client Script",
+    "filters": [
+        ["name", "in", [
+                        'Sync Biometric',
+        ]
+        ]
+    ]
+}]

@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-05-09 04:04:52.566102",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user_nmae",
+  "sirial_number",
+  "sync_time",
+  "from_date",
+  "column_break_gtbl",
+  "user_password",
+  "url",
+  "active"
+ ],
+ "fields": [
+  {
+   "fieldname": "user_nmae",
+   "fieldtype": "Data",
+   "label": "User Name"
+  },
+  {
+   "description": "Serial number is must be unique",
+   "fieldname": "sirial_number",
+   "fieldtype": "Data",
+   "label": "Sirial Number"
+  },
+  {
+   "description": "The mention time is in the minutes",
+   "fieldname": "sync_time",
+   "fieldtype": "Data",
+   "label": "Sync Time"
+  },
+  {
+   "fieldname": "column_break_gtbl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user_password",
+   "fieldtype": "Password",
+   "label": "User Password"
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "Url"
+  },
+  {
+   "default": "0",
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Datetime",
+   "label": "From Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-09 19:26:37.245804",
+ "modified_by": "Administrator",
+ "module": "Biometric App",
+ "name": "Device Details",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
