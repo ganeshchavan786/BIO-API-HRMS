@@ -1,7 +1,3 @@
 ## Biometric App
 
-app
-
-#### License
-
-mit
+This App Develop By Uthara For ESSL API Integration. 
