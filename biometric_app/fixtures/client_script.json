@@ -4,10 +4,10 @@
   "doctype": "Client Script",
   "dt": "Employee Checkin",
   "enabled": 1,
-  "modified": "2024-05-09 13:18:56.009657",
+  "modified": "2024-06-07 13:55:19.212652",
   "module": null,
   "name": "Sync Biometric",
-  "script": "frappe.listview_settings['Employee Checkin'] = {\n\t\n\tonload: function (listview) {\n\t\t// Add your custom button here\n\t\tlistview.page.add_menu_item(__('Create Checkin'), function () {\n\t\t\t// Your custom button logic goes here\n\t\t\t\n\t\t\tfrappe.call({\n                method: 'biometric_app.api-biometric.bio.get_transactions_log',\n                callback: function (response) {\n                    if (response.success) {\n                        create_employee_checkin_documents(response.data);\n                        console.log(\"sucess\");\n                    } else {\n                        console.log(\"fail\",response.message);\n                        frappe.msgprint(response.message);\n                    }\n                }\n            });\n\t\t});\n\t\t\n\t\t\n\t},\n};\n",
+  "script": "frappe.listview_settings['Employee Checkin'] = {\n\t\n\tonload: function (listview) {\n\t\t// Add your custom button here\n\t\tlistview.page.add_menu_item(__('Sync Checkin'), function () {\n\t\t\t// Your custom button logic goes here\n\t\t\t\n\t\t\tfrappe.call({\n                method: 'biometric_app.api-biometric.bio.get_transactions_log',\n                callback: function (response) {\n                    if (response.success) {\n                        create_employee_checkin_documents(response.data);\n                        console.log(\"sucess\");\n                    } else {\n                        console.log(\"fail\",response.message);\n                        frappe.msgprint(response.message);\n                    }\n                }\n            });\n\t\t});\n\t\t\n\t\t\n\t},\n};\n",
   "view": "List"
  }
 ]
