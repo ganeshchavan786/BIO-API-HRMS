@@ -12,9 +12,14 @@ from datetime import datetime
 
 @frappe.whitelist(allow_guest=True)
 def get_transactions_log():
-	data=frappe.db.sql(''' SELECT name from `tabDevice Details` ''',as_dict=True)
-	for i in data:
-		BioDevice = frappe.get_doc('Device Details',i.get('name'))
+	data2 = frappe.db.sql(''' SELECT name, sirial_number, user_nmae, user_password, url, sync_time, from_date FROM `tabDevice Details` WHERE active = 1 ''', as_dict=True)
+	
+	parsed_data = []
+	for j in data2:
+	# data=frappe.db.sql(''' SELECT name from `tabDevice Details` ''',as_dict=True)
+	# for i in data:
+		
+		BioDevice = frappe.get_doc('Device Details',j.get('name'))
 		serial_number = BioDevice.sirial_number
 		user_name = BioDevice.user_nmae
 		user_password = BioDevice.get_password('user_password')
@@ -49,19 +54,30 @@ def get_transactions_log():
 				'Accept': 'text/xml'
 			}
 			response = requests.post(webservice_url, headers=headers, data=data)	
-					
+				
 			if response.status_code == 200:
+			
 				parsed_data = parse_transactions(response.text)
 				create_employee_checkin_documents(parsed_data)
-				return {
+			# 	return {
+			# 		"success": True,
+			# 		"data": parsed_data
+			# 		}
+			# else:
+			# 	return {
+			# 		"success": False,
+			# 		"message": f"Failed to retrieve transaction log. Status Code: {response.status_code}"
+			# 		}
+	if parsed_data:
+		return {
 					"success": True,
 					"data": parsed_data
 					}
-			else:
-				return {
-					"success": False,
-					"message": f"Failed to retrieve transaction log. Status Code: {response.status_code}"
-					}
+	else:
+		return {
+			"success": False,
+			"message": f"Failed to retrieve transaction log. Status Code: {response.status_code}"
+			}
 def parse_transactions(xml_data):
 	def is_datetime(value):
 		try:

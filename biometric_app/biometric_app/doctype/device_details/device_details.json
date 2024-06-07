@@ -38,7 +38,7 @@
   },
   {
    "fieldname": "user_password",
-   "fieldtype": "Password",
+   "fieldtype": "Data",
    "label": "User Password"
   },
   {
@@ -60,7 +60,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-09 19:26:37.245804",
+ "modified": "2024-06-07 13:47:29.342061",
  "modified_by": "Administrator",
  "module": "Biometric App",
  "name": "Device Details",
