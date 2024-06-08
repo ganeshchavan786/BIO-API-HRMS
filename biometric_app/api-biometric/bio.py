@@ -166,9 +166,9 @@ def create_employee_checkin_documents(employee_device_id):
 			for i, entry in enumerate(entries):
 				checkin_doc = frappe.new_doc("Employee Checkin")
 				checkin_doc.employee = employee_id
-				checkin_doc.employee_name = entry['employee_name']
+				checkin_doc.employee_name = entry['employee_name'][:140]
 				checkin_doc.device_id = entry['device_id']
-				checkin_doc.time = entry['Checkin_time']
+				checkin_doc.time = entry['Checkin_time'][:140]
 
 				if i == 0:  # First entry of the day
 					checkin_doc.log_type = 'IN'
