@@ -248,4 +248,14 @@ fixtures = [{
         ]
         ]
     ]
+},
+{
+		"dt":"Property Setter",
+		"filters":[
+			["name","in",[
+                'Employee Checkin-main-title_field',
+                'Employee Checkin-main-autoname',
+            ]
+            ]
+        ]
 }]
