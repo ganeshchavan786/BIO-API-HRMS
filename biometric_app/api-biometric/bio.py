@@ -70,9 +70,9 @@ def get_transactions_log():
 			# 		}
 	if parsed_data:
 		return {
-					"success": True,
-					"data": parsed_data
-					}
+			"success": True,
+			"data": parsed_data
+			}
 	else:
 		return {
 			"success": False,
@@ -109,7 +109,8 @@ def parse_transactions(xml_data):
 					
 						
 					if "device_id" in temp_dict and "checkin" in temp_dict:  # Ensure both device_id and checkin are present before appending
-						result_list.append(temp_dict)				
+						result_list.append(temp_dict)	
+						# print("--------",result_list)			
 				if len(result_list) >= 2:
 					employee_id = check_device_id_matches_employee(result_list)					
 	return employee_id
@@ -122,20 +123,24 @@ def check_device_id_matches_employee(result_list):
 		employees_with_device_id = frappe.get_all(
 			"Employee",
 			filters={"attendance_device_id": device_id},
-			fields=["name","employee_name"]
+			fields=["name","employee_name","default_shift"]
 		)
 		
 		if employees_with_device_id:
+			# print("-----------",employees_with_device_id)
 			for employee in employees_with_device_id:
 				employee_id = employee['name']
 				employee_name = employee['employee_name']
+				shift = employee['default_shift']
 				employee_device_data = {
 					"employee_id" : employee_id,
 					"employee_name" : employee_name,
 					"device_id" : device_id,
-					"Checkin_time" : attendance_time
+					"Checkin_time" : attendance_time,
+					"shift" : shift
 				}
 				employee_device_id.append(employee_device_data)
+				# print("-----------",employee_device_id)
 					
 		else:
 			print(f"No employee found with device id")
@@ -155,42 +160,56 @@ def create_employee_checkin_documents(employee_device_id):
 			employee_entries[employee_id][checkin_date] = []
 
 		employee_entries[employee_id][checkin_date].append(entry)
+		# print("------- ext",employee_entries)
 
 	employee_checkins = []
 
 	for employee_id, dates in employee_entries.items():
+		
 		for checkin_date, entries in dates.items():
 			entries.sort(key=lambda x: x['Checkin_time'])  # Sort entries by time
-
+			
 			last_log_type = None  # Track last log type to determine current log type
 			for i, entry in enumerate(entries):
+				# print("---------------------- pp",i,entry['Checkin_time'])
+				
+						
 				checkin_doc = frappe.new_doc("Employee Checkin")
 				checkin_doc.employee = employee_id
 				checkin_doc.employee_name = entry['employee_name'][:140]
 				checkin_doc.device_id = entry['device_id']
-				checkin_doc.time = entry['Checkin_time'][:140]
+				checkin_doc.time = entry['Checkin_time']
+				checkin_doc.shift = entry['shift']
 
 				if i == 0:  # First entry of the day
 					checkin_doc.log_type = 'IN'
 					last_log_type = 'IN'
+					
 				elif i == len(entries) - 1:  # Last entry of the day
 					if last_log_type == 'IN':
 						checkin_doc.log_type = 'OUT'
+						
 					else:
 						checkin_doc.log_type = 'IN'
+						
 				else:  # Intermediate entries
 					if last_log_type == 'IN':
 						checkin_doc.log_type = 'OUT'
 						last_log_type = 'OUT'
+						# print("ous else if out",checkin_doc.log_type)
 					else:
 						checkin_doc.log_type = 'IN'
+						# print("out else else innnn",checkin_doc.log_type)
 						last_log_type = 'IN'
-
+					
 				try:
+					# if not frappe.db.exists("Employee Checkin", {"employee": employee_id, "time": entry['Checkin_time']}):
 					checkin_doc.insert(ignore_permissions=True)
+					# print("-----",checkin_doc)
 					employee_checkins.append(checkin_doc)
+					
 				except Exception as e:
-					frappe.log_error(f"Error inserting Employee Checkin: {str(e)}")
+					frappe.msgprint(f"Error inserting Employee Checkin: {str(e)}")
 
 	return employee_checkins
 
