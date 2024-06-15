@@ -12,7 +12,7 @@ from datetime import datetime
 
 @frappe.whitelist(allow_guest=True)
 def get_transactions_log():
-	data2 = frappe.db.sql(''' SELECT name, sirial_number, user_nmae, user_password, url, sync_time, from_date FROM `tabDevice Details` WHERE active = 1 ''', as_dict=True)
+	data2 = frappe.db.sql(''' SELECT name, sirial_number, user_nmae, user_password, url, from_date FROM `tabDevice Details` WHERE active = 1 ''', as_dict=True)
 	
 	parsed_data = []
 	for j in data2:
@@ -24,9 +24,9 @@ def get_transactions_log():
 		user_name = BioDevice.user_nmae
 		user_password = BioDevice.get_password('user_password')
 		url = BioDevice.url
-		sync_time = BioDevice.sync_time
+		# sync_time = BioDevice.sync_time
 		from_date = BioDevice.from_date
-		total_min = int(sync_time) * 60
+		# total_min = int(sync_time) * 60
 
 		tomorrow_date = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
 		
