@@ -7,7 +7,6 @@
  "field_order": [
   "user_nmae",
   "sirial_number",
-  "sync_time",
   "from_date",
   "column_break_gtbl",
   "user_password",
@@ -25,12 +24,6 @@
    "fieldname": "sirial_number",
    "fieldtype": "Data",
    "label": "Sirial Number"
-  },
-  {
-   "description": "The mention time is in the minutes",
-   "fieldname": "sync_time",
-   "fieldtype": "Data",
-   "label": "Sync Time"
   },
   {
    "fieldname": "column_break_gtbl",
@@ -60,7 +53,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-07 13:47:29.342061",
+ "modified": "2024-06-15 22:20:23.554427",
  "modified_by": "Administrator",
  "module": "Biometric App",
  "name": "Device Details",
