@@ -240,6 +240,7 @@ scheduler_events = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
 fixtures = [{
     "dt": "Client Script",
     "filters": [
@@ -250,12 +251,12 @@ fixtures = [{
     ]
 },
 {
-		"dt":"Property Setter",
-		"filters":[
-			["name","in",[
-                'Employee Checkin-main-title_field',  
-                'Employee Checkin-main-autoname',            
-            ]
-            ]
+    "dt":"Property Setter",
+    "filters":[
+        ["name","in",[
+            'Employee Checkin-main-title_field',  
+            'Employee Checkin-main-autoname',            
         ]
+        ]
+    ]
 }]
