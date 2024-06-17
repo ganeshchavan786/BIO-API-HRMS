@@ -9,7 +9,6 @@ from datetime import timedelta
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-
 @frappe.whitelist(allow_guest=True)
 def get_transactions_log():
 	data2 = frappe.db.sql(''' SELECT name, sirial_number, user_nmae, user_password, url, from_date FROM `tabDevice Details` WHERE active = 1 ''', as_dict=True)
